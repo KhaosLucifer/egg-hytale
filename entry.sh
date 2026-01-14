@@ -305,6 +305,11 @@ if [ ! -f ".hytale-downloader-credentials.json" ]; then
     $DOWNLOADER -check-update
     $DOWNLOADER -patchline $PATCHLINE -download-path server.zip
     extract_server_files
+
+    # Save version info after initial setup
+    DOWNLOADER_VERSION=$($DOWNLOADER -print-version)
+    echo "$DOWNLOADER_VERSION" > version.txt
+    echo "Version info saved for later use!"
 fi
 
 # Run automatic update if enabled
@@ -335,6 +340,7 @@ if [ "${AUTOMATIC_UPDATE}" = "1" ] && [ "${INITIAL_SETUP}" = "0" ]; then
 
         # Update version.txt after successful update
         echo "$DOWNLOADER_VERSION" > version.txt
+		echo "Version info saved for later use!"
     else
         echo "Versions match, skipping update"
     fi
